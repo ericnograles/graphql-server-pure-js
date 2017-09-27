@@ -1,0 +1,15 @@
+version: '3'
+services:
+  redis:
+    restart: always
+    image: "redis"
+    ports:
+         - "61000:6379"
+  postgres:
+      restart: always
+      environment:
+        - POSTGRES_USER='postgres'
+        - POSTGRES_DB='graphql_baseline'
+      image: "mdillon/postgis"
+      ports:
+           - "61001:5432"

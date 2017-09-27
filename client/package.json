@@ -1,0 +1,36 @@
+{
+  "name": "graphql-baseline-client",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.1",
+    "prettier": "^1.5.2"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "history": "^4.6.3",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "node-sass": "^4.5.3",
+    "npm-run-all": "^4.0.2",
+    "react": "^15.6.1",
+    "react-apollo": "^1.4.3",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "react-scripts": "^1.0.10",
+    "redux": "^3.7.1",
+    "redux-little-router": "^14.2.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
+  },
+  "scripts": {
+    "build-css": "./node_modules/.bin/node-sass src/ -o src/",
+    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
+    "heroku-postbuild": "yarn install && npm rebuild node-sass && npm run build-css && ./node_modules/.bin/react-scripts build",
+    "develop-js": "PORT=3003 REACT_APP_API_ROOT=http://localhost:60000/api react-scripts start",
+    "start": "./node_modules/.bin/npm-run-all -p watch-css develop-js",
+    "test": "CI=true ./node_modules/.bin/react-scripts test --env=jsdom ./src/*.test.js",
+    "eject": "react-scripts eject"
+  }
+}

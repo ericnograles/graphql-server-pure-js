@@ -1,0 +1,56 @@
+{
+  "name": "graphql-baseline",
+  "version": "1.0.0",
+  "description": "A baseline GraphQL server using Apollo and connected to Postgres using Knex and Sequelize",
+  "main": "index.js",
+  "repository": "https://github.com/appirio-digital/graphql-baseline.git",
+  "author": "Eric Nograles <enograles@appirio.com>",
+  "engines": {
+    "node": "8.1.4"
+  },
+  "private": true,
+  "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "bcrypt": "^1.0.2",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "graphql": "^0.10.3",
+    "graphql-server-express": "^1.0.0",
+    "graphql-tools": "^1.1.0",
+    "jsonwebtoken": "^7.4.1",
+    "knex": "^0.13.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "pg": "^6.4.0",
+    "redis": "^2.7.1",
+    "sequelize": "^4.2.1",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "husky": "^0.14.2",
+    "lint-staged": "^4.0.0",
+    "nodemon": "^1.11.0",
+    "prettier": "^1.5.2"
+  },
+  "lint-staged": {
+    "*.js": [
+      "./node_modules/.bin/prettier --single-quote --write",
+      "git add"
+    ]
+  },
+  "scripts": {
+    "build": "cd client && yarn run heroku-postbuild && cd .. && ./node_modules/.bin/babel server -d build --source-maps",
+    "precommit": "lint-staged",
+    "start": "./node_modules/.bin/babel server -d build && node ./build/index.js",
+    "heroku-postbuild": "cd client && yarn run heroku-postbuild",
+    "nodemon": "./node_modules/.bin/nodemon --inspect=5858 --nolazy -r babel-register server/index.js"
+  },
+  "license": "MIT"
+}
