@@ -39,29 +39,39 @@ export const UserEmail = sequelize.define(
   DEFAULT_MODEL_SETTINGS
 );
 
-export const UserPermission = sequelize.define('user_permission',
-{}, DEFAULT_MODEL_SETTINGS);
+export const UserPermission = sequelize.define(
+  'user_permission',
+  {},
+  DEFAULT_MODEL_SETTINGS
+);
 
-export const UserPermissionGroup = sequelize.define('user_permission_group',
-{}, DEFAULT_MODEL_SETTINGS);
+export const UserPermissionGroup = sequelize.define(
+  'user_permission_group',
+  {},
+  DEFAULT_MODEL_SETTINGS
+);
 
 // Associations. See: http://docs.sequelizejs.com/manual/tutorial/associations.html
 UserProfile.hasOne(User, { foreignKey: 'user_profile_id' });
 UserEmail.belongsTo(User, { foreignKey: 'user_id' });
-UserPermission.belongsTo(User, { foreignKey: 'user_id'});
+UserPermission.belongsTo(User, { foreignKey: 'user_id' });
 UserPermission.belongsTo(Permission, { foreignKey: 'permission_id' });
 UserPermissionGroup.belongsTo(User, { foreignKey: 'user_id' });
-UserPermissionGroup.belongsTo(PermissionGroup, { foreignKey: 'permission_group_id'});
+UserPermissionGroup.belongsTo(PermissionGroup, {
+  foreignKey: 'permission_group_id'
+});
 
 export async function migrate() {
   try {
     await UserProfile.sync({ force: process.env.RECREATE_SCHEMA === 'true' });
     await User.sync({ force: process.env.RECREATE_SCHEMA === 'true' });
     await UserEmail.sync({ force: process.env.RECREATE_SCHEMA === 'true' });
-    await UserPermission.sync({ force: process.env.RECREATE_SCHEMA === 'true' });
+    await UserPermission.sync({
+      force: process.env.RECREATE_SCHEMA === 'true'
+    });
 
     let user = await User.create({
-      password: bcrypt.hashSync(`P@ssword!1`, 5)
+      password: bcrypt.hashSync(`P@ssword!1`, 12)
     });
     let userProfile = await UserProfile.create({
       first_name: `Eric`,
@@ -93,8 +103,7 @@ export async function migrate() {
       }
     });
 
-    let createPermissions = permissions
-      .map(permissionRecord => {
+    let createPermissions = permissions.map(permissionRecord => {
       return UserPermission.create({
         permission_id: permissionRecord.id,
         user_id: user.id

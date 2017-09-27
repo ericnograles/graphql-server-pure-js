@@ -4,8 +4,8 @@ import logo from './common/assets/images/logo.svg';
 import './common/assets/styles/App.css';
 import { connect } from 'react-redux';
 import Login from './routes/Login';
-import './node_modules/font-awesome/fonts/fontawesome-webfont.svg';
-import './node_modules/font-awesome/css/font-awesome.min.css';
+import '../node_modules/font-awesome/fonts/fontawesome-webfont.svg';
+import '../node_modules/font-awesome/css/font-awesome.min.css';
 
 class App extends React.Component {
   render() {

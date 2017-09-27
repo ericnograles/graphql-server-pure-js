@@ -4,9 +4,9 @@
   "description": "A baseline GraphQL server using Apollo and connected to Postgres using Knex and Sequelize",
   "main": "index.js",
   "repository": "https://github.com/appirio-digital/graphql-baseline.git",
-  "author": "Eric Nograles <enograles@appirio.com>",
+  "author": "Eric Nograles <grales@gmail.com>",
   "engines": {
-    "node": "8.1.4"
+    "node": "8.4.0"
   },
   "private": true,
   "dependencies": {
@@ -48,7 +48,7 @@
   "scripts": {
     "build": "cd client && yarn run heroku-postbuild && cd .. && ./node_modules/.bin/babel server -d build --source-maps",
     "precommit": "lint-staged",
-    "start": "./node_modules/.bin/babel server -d build && node ./build/index.js",
+    "start": "npm run build && node ./build/index.js",
     "heroku-postbuild": "cd client && yarn run heroku-postbuild",
     "nodemon": "./node_modules/.bin/nodemon --inspect=5858 --nolazy -r babel-register server/index.js"
   },

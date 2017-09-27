@@ -68,3 +68,4 @@ client/build/
 .idea/inspectionProfiles
 .idea/jsLinters
 .idea/watcherTasks.xml
+.vscode

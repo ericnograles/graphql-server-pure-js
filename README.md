@@ -1,4 +1,4 @@
-# ads-graphql-baseline
+# REST in Peace: The Rise of GraphQL
 
 ## Overview
 

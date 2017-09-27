@@ -35,6 +35,7 @@ export default async () => {
     });
 
     // Migrations
+    await Migrations.MigratePermission();
     await Migrations.MigrateUser();
 
     // Configure GraphQL and GraphiQL
@@ -68,7 +69,7 @@ export default async () => {
     );
 
     // Spin up Express
-    let port = process.env.PORT || 60000;
+    let port = process.env.PORT || 9000;
     await app.listen(port);
     winston.info(`${packageJson.name} started on port ${port}`);
     return app;
