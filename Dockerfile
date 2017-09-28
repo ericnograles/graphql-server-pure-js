@@ -5,6 +5,5 @@ COPY . .
 RUN npm install -g yarn
 RUN yarn install
 RUN cd client && yarn install
-EXPOSE 9000
-VOLUME [ "/graphql" ]
+EXPOSE 9000 3001 5858
 RUN echo "Started GraphQL"

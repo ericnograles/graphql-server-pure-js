@@ -28,9 +28,10 @@
     "build-css": "./node_modules/.bin/node-sass src/ -o src/",
     "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
     "heroku-postbuild": "yarn install && npm rebuild node-sass && npm run build-css && ./node_modules/.bin/react-scripts build",
-    "develop-js": "PORT=3003 REACT_APP_API_ROOT=http://localhost:60000/api react-scripts start",
+    "develop-js": "react-scripts start",
     "start": "./node_modules/.bin/npm-run-all -p watch-css develop-js",
     "test": "CI=true ./node_modules/.bin/react-scripts test --env=jsdom ./src/*.test.js",
+    "test:watch": "./node_modules/.bin/react-scripts test --env=jsdom --watch ./src/*.test.js",
     "eject": "react-scripts eject"
   }
 }

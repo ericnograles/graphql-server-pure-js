@@ -4,7 +4,7 @@ services:
     restart: always
     image: "redis"
     ports:
-        - "63000:6379"
+        - "64000:6379"
   graphql_postgres:
     restart: always
     environment:
@@ -13,7 +13,7 @@ services:
       - POSTGRES_DB=graphql
     image: "mdillon/postgis"
     ports:
-        - "63001:5432"
+        - "64001:5432"
   graphql:
     build: .
     depends_on:
@@ -23,13 +23,22 @@ services:
       - graphql_postgres
       - graphql_redis
     ports: 
-      - 63002:9000
+      - 64002:9000
+      - 64003:3000
+      - 64004:5858
+    volumes:
+      - ./server:/graphql/server
+      - ./client/public:/graphql/client/public
+      - ./client/src:/graphql/client/src
+      - ./client/build:/graphql/client/build
+      - ./build:/graphql/build
     environment:
-      REACT_APP_API_ROOT: http://localhost:63002
+      REACT_APP_API_ROOT: http://localhost:64002
       REACT_APP_REDUX_LOGGING_ENABLED: "true"
       API_SECRET: shhhh
       DATABASE_URL: postgres://postgres:password@graphql_postgres:5432/graphql
       REDIS_URL: redis://graphql_redis:6379
       REDIS_USER_SESSIONS_DB: 1
       RECREATE_SCHEMA: "true"
-    command: ["./wait-for-it.sh", "graphql_postgres:5432", "--", "npm", "start"]
+    command: ["./wait-for-it.sh", "graphql_postgres:5432", "--", "npm", "run", "develop:docker"]
+    restart: always

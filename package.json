@@ -49,8 +49,10 @@
     "build": "cd client && yarn run heroku-postbuild && cd .. && ./node_modules/.bin/babel server -d build --source-maps",
     "precommit": "lint-staged",
     "start": "npm run build && node ./build/index.js",
-    "heroku-postbuild": "cd client && yarn run heroku-postbuild",
-    "nodemon": "./node_modules/.bin/nodemon --inspect=5858 --nolazy -r babel-register server/index.js"
+    "develop:client": "cd client && (yarn start & yarn run test:watch)",
+    "develop:api": "./node_modules/.bin/nodemon --inspect=0.0.0.0:5858 --nolazy -r babel-register server/index.js",
+    "develop:docker": "yarn run develop:api & yarn run develop:client",
+    "heroku-postbuild": "cd client && yarn run heroku-postbuild"
   },
   "license": "MIT"
 }
