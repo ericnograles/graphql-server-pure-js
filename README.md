@@ -22,33 +22,18 @@ Instead of a traditionally imperative way to obtain data, using GraphQL largely 
 * Uses [redis](https://github.com/NodeRedis/node_redis) for distributed session management
 * Uses [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) for JWT and refresh token generation
 * Uses [bcrypt](https://github.com/kelektiv/node.bcrypt.js) for localized password hashing
-* (TODO) Uses [jest](https://facebook.github.io/jest/) for unit testing
+* Uses [jest](https://facebook.github.io/jest/) for unit testing
 * Includes [create-react-app](https://github.com/facebookincubator/create-react-app) as a client-side SPA
 * Supports [Visual Studio Code](https://code.visualstudio.com/) development out of the box
 
-## Demo
-
-* [Login](https://graphql-baseline-dev.herokuapp.com/explorer?operationName=loginAsUser&query=mutation%20loginAsUser%20%7B%0A%20%20login(%0A%20%20%20%20email%3A%20%22enograles%2Bgraphql.primary%40appirio.com%22%2C%0A%20%20%20%20password%3A%20%22P%40ssword!1%22%0A%20%20)%20%7B%0A%20%20%20%20token%0A%20%20%20%20expires%0A%20%20%20%20refresh_token%2C%0A%20%20%20%20profile%20%7B%0A%20%20%20%20%20%20first_name%0A%20%20%20%20%20%20last_name%0A%20%20%20%20%20%20email%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D)
-* [Register a User](https://graphql-baseline-dev.herokuapp.com/explorer?operationName=newUser&query=mutation%20newUser%20%7B%0A%20%20createUser(user%3A%20%7B%0A%20%20%20%20first_name%3A%20%22From%22%2C%0A%20%20%20%20last_name%3A%20%22Graphiql%22%2C%0A%20%20%20%20email%3A%20%22from%40graphiql.org%22%2C%0A%20%20%20%20password%3A%20%22password%22%0A%20%20%7D)%20%7B%0A%20%20%20%20first_name%2C%0A%20%20%20%20last_name%2C%0A%20%20%20%20email%0A%20%20%7D%0A%7D)
-* [Find a User By Email](https://graphql-baseline-dev.herokuapp.com/explorer?query=query%20findUser%20%7B%0A%20%20user(email%3A%20%22enograles%2Bgraphql.primary%40appirio.com%22)%20%7B%0A%20%20%20%20first_name%2C%0A%20%20%20%20last_name%2C%0A%20%20%20%20email%0A%20%20%7D%0A%7D&operationName=findUser)
-
-## Local Development Infrastructure
-
-* Uses [docker-compose.yaml](https://docs.docker.com/compose/) for local development infrastructure scaffold
-* Postgres is published on port 61001 and redis on 61000, respectively
-
 ## Prerequisites
 
-1. Node v6 or higher ([Node Version Manager](https://github.com/creationix/nvm) highly recommended)
-    * **Note**: The `package.json` is configured to run on Node 8.x on Heroku
 1. [Docker](https://www.docker.com/)
-1. `npm install -g yarn`
+1. [Visual Studio Code](https://code.visualstudio.com/)
 
-## Environment Variables
+## Environment Variable Reference
 
-You will need to create a .env file at the root of this repo with the environment variables below defined.
-
-**Note**: .env files, like .pem files or anything secure, must never be added to source control
+**Note**: The docker-compose.yml defines all of these in relation to this app's `Dockerfile`. This is simply for reference if you want to run this locally.
 
 | Environment Variable Name  | Purpose | Sample Value |
 | ------------- | ------------- | ------------- |
@@ -61,52 +46,23 @@ You will need to create a .env file at the root of this repo with the environmen
 ## Installation
 
 1. Clone this repo
-1. `yarn install`
-1. `cd graphql-baseline-docker && ./scaffold_local_database.sh && cd ..`
-1. `yarn run build && yarn start`
-1. Open browser to `http://localhost:60000/explorer` to launch GraphiQL
-1. Open browser to `http://localhost:60000` to launch `create-react-app` SPA
+1. At the root of the repo, execute `docker-compose build`
+1. At the root of the repo, execute `docker-compose up`
+1. Browse to `http://localhost:64002/explorer` for the GraphiQL server running on Node
+1. Browse to `http://localhost:64003` for the React SPA
 
 ## Debugging (Client)
 
-1. Open the root of this repo
-1. In a terminal, type in `cd client`
-1. `yarn run start`
+1. Browse to `http://localhost:64003` for the React SPA
+1. Open Chrome DevTools and debug like a normal SPA
+    * **Note**: Any changes to `client/src` will reflect on the Docker container
 
 ## Debugging (Server)
 
-### WebStorm or IntelliJIDEA
-
-1. Open the root of this repo
-1. In your Run Configurations, select `graphql-baseline` and press the debug button
-    * **Note**: If you would like "hot reloads" in WebStorm or IntelliJIDEA, please be sure to install and enable [LiveEdit](https://www.jetbrains.com/help/idea/live-edit.html)
-
-### Visual Studio Code
-
-1. Open the root of this repo
-1. In the Debug screen, select the `graphql-baseline` launch task and press the debug button
-
-#### Nodemon Debugging for Non-Webstorm/IntelliJIDEA Editors
-
-Optionally, you can run nodemon.  Nodemon will automatically restart the GraphQL server on any changes, similar to the LiveEdit plugin that jetBrains offers.
-
-1. Open the root of this repo.
-1. In a terminal, execute `yarn run nodemon`
-1. In VS Code, select the `Attach to Nodemon` launch task and press the Start Debugging button
-
-## Creating a New GraphQL Scaffold
-
-1. `git clone https://github.com/appirio-digital/ads-baseline-graphql.git my_project_folder_here`
-1. `cd my_project_folder_here`
-1. `rm -rf .git`
-1. `git init`
-1. `git add .`
-1. `yarn install`
-1. `git commit -m "my client's scaffold"`
-1. `git remote add origin https://github.com/my-client-github-org-here/my_project_repo_here.git`
-1. `yarn init`
-1. Define your project name, version, licensing, repo location from above, etc
-1. `git push -u origin master`
+1. Open VS Code
+1. Execute the `Attach to Nodemon` task
+1. Place breakpoints in any files under `server`
+    * **Note**: Any changes to `server` will reflect on the Docker container
 
 ## Deploying to Heroku
 
