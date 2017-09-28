@@ -1,11 +1,13 @@
 version: '3'
 services:
   graphql_redis:
+    container_name: reactjstampabay_graphql_redis
     restart: always
     image: "redis"
     ports:
         - "64000:6379"
   graphql_postgres:
+    container_name: reactjstampabay_graphql_postgres
     restart: always
     environment:
       - POSTGRES_USER=postgres
@@ -15,6 +17,7 @@ services:
     ports:
         - "64001:5432"
   graphql:
+    container_name: reactjstampabay_graphql
     build: .
     depends_on:
       - graphql_postgres
@@ -32,6 +35,10 @@ services:
       - ./client/src:/graphql/client/src
       - ./client/build:/graphql/client/build
       - ./build:/graphql/build
+      - ./package.json:/graphql/package.json
+      - ./yarn.lock:/graphql/yarn.lock
+      - ./client/package.json:/graphql/client/package.json
+      - ./client/yarn.lock:/graphql/client/yarn.lock
     environment:
       REACT_APP_API_ROOT: http://localhost:64002
       REACT_APP_REDUX_LOGGING_ENABLED: "true"

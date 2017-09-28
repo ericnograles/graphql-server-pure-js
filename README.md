@@ -55,9 +55,13 @@ Instead of a traditionally imperative way to obtain data, using GraphQL largely 
 
 This scaffold is completely containerized in Docker, meaning you do not have to worry about any local dependencies apart from Docker and VS Code.
 
-However, there is one caveat.  If you add any new dependencies to `package.json` for either the server or client-side, be sure to execute a new `docker-compose build` and then `docker-compose up` to have the container reflect the new dependencies.
+### Adding New Dependencies
 
-The reason for this is that certain binary-based distributions, such as `bcrypt` and `node-sass`, will only build for their specific platform.  To counteract this and keep the container isolated, we simply mount the source code folders from your host to the container and ignore `node_modules`.
+Your container is the source of your code going forward.  While it has a localized `node_modules` on both server and client to prevent platform-specific compilation problems (with things like `bcrypt`), you can still manage dependencies within and it will reflect on your local `package.json`.
+
+To do this, you simply need to bash into the container by executing: `docker exec -i -t reactjstampabay_graphql /bin/bash`.  This will open a terminal in the container running your code.  You can then add dependencies as normal, using `yarn add some_library`.
+
+To exit from the container's bash, simply execute `exit`
 
 ## Debugging (Client)
 
