@@ -51,6 +51,14 @@ Instead of a traditionally imperative way to obtain data, using GraphQL largely 
 1. Browse to `http://localhost:64002/explorer` for the GraphiQL server running on Node
 1. Browse to `http://localhost:64003` for the React SPA
 
+## Ongoing Development
+
+This scaffold is completely containerized in Docker, meaning you do not have to worry about any local dependencies apart from Docker and VS Code.
+
+However, there is one caveat.  If you add any new dependencies to `package.json` for either the server or client-side, be sure to execute a new `docker-compose build` and then `docker-compose up` to have the container reflect the new dependencies.
+
+The reason for this is that certain binary-based distributions, such as `bcrypt` and `node-sass`, will only build for their specific platform.  To counteract this and keep the container isolated, we simply mount the source code folders from your host to the container and ignore `node_modules`.
+
 ## Debugging (Client)
 
 1. Browse to `http://localhost:64003` for the React SPA
