@@ -26,9 +26,10 @@ services:
       - graphql_postgres
       - graphql_redis
     ports: 
-      - 64002:9000
-      - 64003:3000
-      - 64004:5858
+      - 64002:9000 # Web API
+      - 64003:9001 # WebSockets
+      - 64004:5858 # Debug port for Node
+      - 64005:3000 # React SPA
     volumes:
       - ./server:/graphql/server
       - ./client/public:/graphql/client/public
@@ -40,7 +41,8 @@ services:
       - ./client/package.json:/graphql/client/package.json
       - ./client/yarn.lock:/graphql/client/yarn.lock
     environment:
-      REACT_APP_API_ROOT: http://localhost:64002
+      REACT_APP_API_ROOT: http://localhost:64002/api
+      REACT_APP_WS_ROOT: http://localhost:64003
       REACT_APP_REDUX_LOGGING_ENABLED: "true"
       API_SECRET: shhhh
       DATABASE_URL: postgres://postgres:password@graphql_postgres:5432/graphql

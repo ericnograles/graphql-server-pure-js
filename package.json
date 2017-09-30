@@ -50,7 +50,7 @@
     "precommit": "lint-staged",
     "start": "npm run build && node ./build/index.js",
     "develop:client": "cd client && (yarn start & yarn run test:watch)",
-    "develop:api": "./node_modules/.bin/nodemon --inspect=0.0.0.0:5858 --nolazy -r babel-register server/index.js",
+    "develop:api": "./node_modules/.bin/nodemon --watch server --inspect=0.0.0.0:5858 --nolazy -r babel-register server/index.js",
     "develop:docker": "yarn run develop:api & yarn run develop:client",
     "heroku-postbuild": "cd client && yarn run heroku-postbuild"
   },

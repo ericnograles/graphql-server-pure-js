@@ -3,8 +3,18 @@ import ReactDOM from 'react-dom';
 import './common/assets/styles/index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+
+// Apollo
+import { getOperationAST } from 'graphql';
+import { ApolloClient, ApolloProvider } from 'react-apollo';
+import {
+  SubscriptionClient,
+  addGraphQLSubscriptions
+} from 'subscriptions-transport-ws';
+import { ApolloLink, HttpLink, WebSocketLink } from 'apollo-link';
+
+// Redux
 import { Provider } from 'react-redux';
-import { ApolloClient, ApolloProvider, createNetworkInterface } from 'react-apollo';
 import { initializeCurrentLocation } from 'redux-little-router';
 import configureStore from './common/store/configureStore';
 const store = configureStore();
@@ -16,11 +26,16 @@ if (initialLocation) {
 }
 
 // GraphQL via Apollo
-const networkInterface = createNetworkInterface({
-  uri: process.env.REACT_APP_API_ROOT
-});
-
-const client = new ApolloClient({networkInterface});
+const graphQLUri = process.env.REACT_APP_API_ROOT;
+const httpLink = new HttpLink({ uri: graphQLUri });
+const link = ApolloLink.split(operation => {
+  const operationAST = getOperationAST(
+    operation.query,
+    operation.operationName
+  );
+  return !!operationAST && operationAST.operation === 'subscription';
+}, httpLink);
+const client = new ApolloClient({ networkInterface: httpLink });
 
 ReactDOM.render(
   <Provider store={store}>

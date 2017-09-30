@@ -13,6 +13,10 @@ GraphQL provides an expressive, declarative way to define data.  Combined with t
 
 Instead of a traditionally imperative way to obtain data, using GraphQL largely follows a declarative model similar to React: the front-end is focused on the "what" versus the "how"
 
+## This Scaffold
+
+This scaffold introduces a more "backend-centric" way of constructing a GraphQL Server.  Specifically, the pattern of
+
 ## Approach
 
 * Uses [Express](https://expressjs.com/) and [graphql-server-express](https://github.com/apollographql/graphql-server)
