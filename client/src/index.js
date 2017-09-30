@@ -28,14 +28,10 @@ if (initialLocation) {
 // GraphQL via Apollo
 const graphQLUri = process.env.REACT_APP_API_ROOT;
 const httpLink = new HttpLink({ uri: graphQLUri });
-const link = ApolloLink.split(operation => {
-  const operationAST = getOperationAST(
-    operation.query,
-    operation.operationName
-  );
-  return !!operationAST && operationAST.operation === 'subscription';
-}, httpLink);
-const client = new ApolloClient({ networkInterface: httpLink });
+const wsLink = new WebSocketLink({ uri: process.env.REACT_APP_WS_ROOT });
+
+const link = ApolloLink.from([httpLink, wsLink]);
+const client = new ApolloClient({ networkInterface: link });
 
 ReactDOM.render(
   <Provider store={store}>
