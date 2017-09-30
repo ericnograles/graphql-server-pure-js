@@ -42,7 +42,7 @@ services:
       - ./client/yarn.lock:/graphql/client/yarn.lock
     environment:
       REACT_APP_API_ROOT: http://localhost:64002/api
-      REACT_APP_WS_ROOT: ws://localhost:64003
+      REACT_APP_WS_ROOT: ws://localhost:64003/graphql
       REACT_APP_REDUX_LOGGING_ENABLED: "true"
       API_SECRET: shhhh
       DATABASE_URL: postgres://postgres:password@graphql_postgres:5432/graphql

@@ -5,12 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 // Apollo
-import { getOperationAST } from 'graphql';
 import { ApolloClient, ApolloProvider } from 'react-apollo';
-import {
-  SubscriptionClient,
-  addGraphQLSubscriptions
-} from 'subscriptions-transport-ws';
 import { ApolloLink, HttpLink, WebSocketLink } from 'apollo-link';
 
 // Redux
@@ -26,8 +21,7 @@ if (initialLocation) {
 }
 
 // GraphQL via Apollo
-const graphQLUri = process.env.REACT_APP_API_ROOT;
-const httpLink = new HttpLink({ uri: graphQLUri });
+const httpLink = new HttpLink({ uri: process.env.REACT_APP_API_ROOT });
 const wsLink = new WebSocketLink({ uri: process.env.REACT_APP_WS_ROOT });
 
 const link = ApolloLink.from([httpLink, wsLink]);
