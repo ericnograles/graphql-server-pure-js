@@ -8,6 +8,7 @@
     "prettier": "^1.5.2"
   },
   "dependencies": {
+    "apollo-client": "git@github.com:apollographql/apollo-client.git#2.0.0-beta.3",
     "apollo-link": "^0.5.4",
     "font-awesome": "^4.7.0",
     "history": "^4.6.3",
@@ -16,7 +17,7 @@
     "node-sass": "^4.5.3",
     "npm-run-all": "^4.0.2",
     "react": "^15.6.1",
-    "react-apollo": "^1.4.3",
+    "react-apollo": "^1.4.16",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "react-scripts": "^1.0.10",
