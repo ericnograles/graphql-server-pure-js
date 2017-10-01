@@ -6,7 +6,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 // Apollo
 import { ApolloClient, ApolloProvider } from 'react-apollo';
-import { ApolloLink, HttpLink, WebSocketLink } from 'apollo-link';
+import { createNetworkInterface } from 'apollo-client'; 
+import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -21,11 +22,20 @@ if (initialLocation) {
 }
 
 // GraphQL via Apollo
-const httpLink = new HttpLink({ uri: process.env.REACT_APP_API_ROOT });
-const wsLink = new WebSocketLink({ uri: process.env.REACT_APP_WS_ROOT });
+const wsClient = new SubscriptionClient(process.env.REACT_APP_WS_ROOT, {
+  reconnect: true
+});
 
-const link = ApolloLink.from([httpLink, wsLink]);
-const client = new ApolloClient({ networkInterface: link });
+const networkInterface = createNetworkInterface({
+  uri: process.env.REACT_APP_API_ROOT
+});
+
+const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
+  networkInterface,
+  wsClient
+);
+
+const client = new ApolloClient({ networkInterface: networkInterfaceWithSubscriptions });
 
 ReactDOM.render(
   <Provider store={store}>
